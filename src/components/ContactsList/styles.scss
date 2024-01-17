@@ -1,0 +1,33 @@
+@import '../../assets/styles/themes/default.scss';
+.container {
+    margin-top: 32px;
+    header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        strong{
+            text-transform: lowercase;
+            font-size: 24px;
+            color: #222;
+        }
+
+        a{
+            font-size: 16px;
+            color: $primary;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid $primary;
+            border-radius: 4px;
+            &:hover{
+                background-color: $primary;
+                color: #fff;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+
+    }
+}
+
+
