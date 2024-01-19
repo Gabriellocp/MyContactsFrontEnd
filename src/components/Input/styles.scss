@@ -1,0 +1,20 @@
+@import '../../assets/styles/themes/default.scss';
+.input {
+    width: 100%;
+    background-color: #fff;
+    // border: none;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.04);
+    height: 52px;
+    border-radius: 4px;
+    outline: none;
+    padding: 0px 16px;
+    font-size: 16px;
+    border: 2px solid #fff;
+    transition: border-color .2s ease-in;
+    &:focus{
+        border-color: $primary;
+    }
+    & + .input {
+        margin-top: 16px;
+    }
+}
