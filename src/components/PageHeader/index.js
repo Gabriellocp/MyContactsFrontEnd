@@ -12,6 +12,7 @@ export default function PageHeader({ title }) {
         <span>Back</span>
       </Link>
       <h1>{title}</h1>
+
     </header>
   );
 }
