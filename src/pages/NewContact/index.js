@@ -1,3 +1,8 @@
+import React from 'react';
+import PageHeader from '../../components/PageHeader';
+
 export default function NewContact() {
-  return 'NewContact';
+  return (
+    <PageHeader title="New Contact" />
+  );
 }

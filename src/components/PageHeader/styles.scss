@@ -1,0 +1,20 @@
+@import '../../assets/styles/themes/default.scss';
+.pageHeader{
+    display: flex;
+    align-items: flex-start;
+    a{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: $primary;
+        text-decoration: none;
+        font-weight: bold;
+        img{
+            transform: rotate(-90deg);
+        }
+    }
+
+    span{
+        font-weight: bold;
+    }
+}
