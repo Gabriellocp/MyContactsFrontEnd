@@ -1,0 +1,47 @@
+@import '../../assets/styles/themes/default.scss';
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container{
+        background: #fff;
+        border-radius: 4px;
+        padding: 24px;
+        max-width: 450px;
+        width: 100%;
+        h1{
+            font-size: 22px;
+        }
+        p{
+            margin-top: 8px;
+        }
+        .footer{
+            align-items: center;
+            justify-content: flex-end;
+            display: flex;
+            margin-top: 32px;
+            .cancelButton{
+                border: none;
+                background: transparent;
+                color: $gray-200;
+                font-size: 16px;
+                margin-right: 8px;
+            }
+            button{
+                max-width: 100px;
+            }
+        }
+        &[danger]{
+            h1{
+                color: $danger
+            }
+        }
+    }
+}

@@ -4,6 +4,7 @@ import styles from './styles.scss';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
+import Modal from '../../components/Modal';
 
 export default function ContactsList() {
   return (
@@ -42,6 +43,7 @@ export default function ContactsList() {
             </div>
           </div>
         </div>
+        <Modal />
       </div>
     </>
 

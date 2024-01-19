@@ -20,4 +20,13 @@
         background-color: #CCCCCC;
         cursor: default;
     }
+    &[danger]{
+        background: $danger;
+        &:hover{
+            background: $danger-light;
+        }
+        &:active{
+            background: $danger-dark;
+        }
+    }
 }
