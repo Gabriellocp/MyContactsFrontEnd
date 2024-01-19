@@ -26,7 +26,61 @@
                 transition: all 0.2s ease-in-out;
             }
         }
+    }
+    .listContainer{
+        margin-top: 24px;
+        header{
+            margin-bottom: 8px;
+            button{
+                display: flex;
+                align-items: center;
+                color: $primary;
+                gap: 8px;
+                font-weight: bold;
+                background: transparent;
+                border: none;
+            }
+        }
 
+    }
+    .card{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        padding: 16px;
+        border-radius: 4px;
+        & + .card {
+            margin-top: 16px;
+        }
+        .info{
+            .contact{
+                display:flex;
+                gap: 8px;
+                text-transform: uppercase;
+                small{
+                    color: $primary;
+                    font-weight: bold;
+                    padding: 4px;
+                    border-radius: 4px;
+                    background: $primary-lighter;
+                }
+            }
+            span{
+                display: block;
+                font-size: 14px;
+                color: $gray-200;
+            }
+        }
+        .actions{
+            display: flex;
+            align-items: center;
+            button{
+                margin-left: 8px;
+                background: transparent;
+                border: none;
+            }
+        }
     }
 }
 
