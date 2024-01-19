@@ -8,7 +8,9 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle[hash].js',
     clean: true,
+    publicPath: '/',
   },
+
   mode: 'development',
   module: {
     rules: [

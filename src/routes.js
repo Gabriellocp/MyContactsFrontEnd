@@ -9,7 +9,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" Component={Home} />
       <Route path="/new" Component={NewContact} />
-      <Route path="/edit:id" Component={EditContact} />
+      <Route path="/edit/:id" Component={EditContact} />
     </Routes>
   );
 }
