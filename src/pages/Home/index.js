@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './styles.scss';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
@@ -13,7 +14,7 @@ export default function ContactsList() {
       <div className={styles.container}>
         <header>
           <strong>3 Contacts</strong>
-          <a href="/">New contact</a>
+          <Link to="/new">New contact</Link>
         </header>
         <div className={styles.listContainer}>
           <header>
@@ -32,9 +33,9 @@ export default function ContactsList() {
               <span>Phone</span>
             </div>
             <div className={styles.actions}>
-              <a href="/">
+              <Link to="/edit/123">
                 <img src={edit} alt="edit" />
-              </a>
+              </Link>
               <button type="button" onClick={() => {}}>
                 <img src={trashcan} alt="delete" />
               </button>
