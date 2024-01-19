@@ -8,7 +8,6 @@ export default function Header() {
       <img width={201} src={logo} alt="logo" />
       <form className={styles.searchInput}>
         <input type="text" placeholder="Search contact by name" />
-
       </form>
     </header>
   );
