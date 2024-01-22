@@ -7,13 +7,14 @@ import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
 import isEmailValid from '../../utils/isEmailValid';
+import useErrors from '../../hooks/useErrors';
 
 export default function ContactForm({ buttonLabel }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  const [errors, setErrors] = useState([]);
+  const { setError, removeError, getErrorMessageByFieldName } = useErrors([]);
   function handleSubmit(event) {
     event.preventDefault();
     console.log({
@@ -25,9 +26,9 @@ export default function ContactForm({ buttonLabel }) {
     const { value } = e.target;
     setName(value);
     if (!value) {
-      setErrors((prevState) => [...prevState, { field: 'name', message: 'Name is required' }]);
+      setError('name', 'Name is Required');
     } else {
-      setErrors((prevState) => [...prevState].filter((err) => err.field !== 'name'));
+      removeError('name');
     }
   }
 
@@ -35,24 +36,14 @@ export default function ContactForm({ buttonLabel }) {
     const { value } = e.target;
     setEmail(value);
     if (!value) {
-      setErrors((prevState) => [...prevState, { field: 'email', message: 'E-mail is required' }]);
+      setError('email', 'E-mail is Required');
     } else if (!isEmailValid(value)) {
-      const emailAlreadyHasError = errors.find((err) => err.field === 'email');
-      if (emailAlreadyHasError) return;
-      setErrors((prevState) => [...prevState, { field: 'email', message: 'E-mail is not valid' }]);
+      setError('email', 'E-mail is not valid');
     } else {
-      console.log('Alou');
-      setErrors((prevState) => [...prevState].filter((err) => err.field !== 'email'));
+      removeError('email');
     }
   }
 
-  function getErrorMessageByFieldName(field) {
-    return errors.find((err) => err.field === field)?.message;
-  }
-
-  function getErrorByFieldName(field) {
-    return !!errors.find((err) => err.field === field);
-  }
   return (
     <form
       className={styles.container}
@@ -63,7 +54,7 @@ export default function ContactForm({ buttonLabel }) {
           placeholder="Name"
           value={name}
           onChange={handleNameChange}
-          error={getErrorByFieldName('name')}
+          error={!!getErrorMessageByFieldName('name')}
         />
       </FormGroup>
       <FormGroup error={getErrorMessageByFieldName('email')}>
@@ -71,7 +62,7 @@ export default function ContactForm({ buttonLabel }) {
           placeholder="E-mail"
           value={email}
           onChange={handleEmailChange}
-          error={getErrorByFieldName('email')}
+          error={!!getErrorMessageByFieldName('email')}
         />
       </FormGroup>
       <FormGroup>
