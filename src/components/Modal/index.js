@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import Button from '../Button';
 
 export default function Modal({ danger }) {
-  return (
+  return ReactDOM.createPortal(
     <div className={styles.overlay}>
       <div className={styles.container} danger={danger ? '' : null}>
         <h1>Modals title</h1>
@@ -17,7 +18,8 @@ export default function Modal({ danger }) {
           <Button danger={danger}>Delete</Button>
         </footer>
       </div>
-    </div>
+    </div>,
+    document.getElementById('modalRoot'),
   );
 }
 
