@@ -1,5 +1,12 @@
+@import '../../assets/styles/themes/default.scss';
 .container {
     & + .container {
         margin-top: 16px;
+    }
+    small {
+        display: block;
+        margin-top: 8px;
+        font-size: 12px;
+        color: $danger-dark
     }
 }

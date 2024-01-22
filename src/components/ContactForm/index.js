@@ -9,8 +9,8 @@ import Button from '../Button';
 export default function ContactForm({ buttonLabel }) {
   return (
     <form className={styles.container}>
-      <FormGroup>
-        <Input placeholder="Name" />
+      <FormGroup error="Invalid format">
+        <Input placeholder="Name" error />
       </FormGroup>
       <FormGroup>
         <Input placeholder="E-mail" />
