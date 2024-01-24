@@ -8,6 +8,11 @@ import trashcan from '../../assets/images/icons/trashcan.svg';
 export default function Home() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
+  const [searchTerm, setSearchTerm] = useState('');
+  const filteredContacts = contacts.filter((contact) => (
+    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  ));
+  console.log(filteredContacts);
   useEffect(() => {
     fetch(`http://localhost:3000/contacts?order=${orderBy}`)
       .then(async (response) => {
@@ -23,24 +28,32 @@ export default function Home() {
     setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'));
   }
 
+  function handleChangeSearch(event) {
+    const { value } = event.target;
+    setSearchTerm(value);
+  }
+
   return (
     <>
       <form className={styles.searchInput}>
-        <input type="text" placeholder="Search contact by name" />
+        <input type="text" placeholder="Search contact by name" onChange={handleChangeSearch} />
       </form>
       <div className={styles.container}>
         <header>
-          <strong>{`${contacts.length} Contact${contacts.length === 1 ? 's' : ''}`}</strong>
+          <strong>{`${filteredContacts.length} Contact${filteredContacts.length === 1 ? '' : 's'}`}</strong>
           <Link to="/new">New contact</Link>
         </header>
+        {filteredContacts.length > 0
+        && (
         <header className={styles.listHeader}>
           <button onClick={handleToggleOrderBy} type="button">
             Name
             <img src={arrow} alt="order" order={orderBy} />
           </button>
         </header>
+        )}
         {
-            contacts.map((contact) => (
+            filteredContacts.map((contact) => (
               <div key={contact.id} className={styles.card}>
                 <div className={styles.info}>
                   <div className={styles.contact}>
