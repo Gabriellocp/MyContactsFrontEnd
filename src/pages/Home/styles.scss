@@ -27,21 +27,25 @@
             }
         }
     }
-    .listContainer{
+    .listHeader{
         margin-top: 24px;
-        header{
-            margin-bottom: 8px;
-            button{
-                display: flex;
-                align-items: center;
-                color: $primary;
-                gap: 8px;
-                font-weight: bold;
-                background: transparent;
-                border: none;
-            }
+        margin-bottom: 8px;
+        button{
+            display: flex;
+            align-items: center;
+            color: $primary;
+            gap: 8px;
+            font-weight: bold;
+            background: transparent;
+            border: none;
         }
-
+        img{
+            transform: rotate(0deg);
+            &[order='desc']{
+                transform: rotate(180deg);
+            }
+            transition: transform .3s ease-in-out;
+        }
     }
     .card{
         display: flex;
