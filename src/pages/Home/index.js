@@ -5,7 +5,7 @@ import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
 
-export default function ContactsList() {
+export default function Home() {
   return (
     <>
       <form className={styles.searchInput}>
