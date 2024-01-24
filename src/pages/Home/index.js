@@ -4,15 +4,18 @@ import styles from './styles.scss';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
+import Loader from '../../components/Loader';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
   useEffect(() => {
+    setIsLoading(true);
     fetch(`http://localhost:3000/contacts?order=${orderBy}`)
       .then(async (response) => {
         const json = await response.json();
@@ -20,6 +23,8 @@ export default function Home() {
       })
       .catch((err) => {
         console.log(`Error ${err}`);
+      }).finally(() => {
+        setIsLoading(false);
       });
   }, [orderBy]);
 
@@ -34,6 +39,7 @@ export default function Home() {
 
   return (
     <>
+      {isLoading && <Loader />}
       <form className={styles.searchInput}>
         <input type="text" placeholder="Search contact by name" onChange={handleChangeSearch} />
       </form>
