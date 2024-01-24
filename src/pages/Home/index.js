@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <>
-      {isLoading && <Loader />}
+      <Loader loading={isLoading} />
       <form className={styles.searchInput}>
         <input type="text" placeholder="Search contact by name" onChange={handleChangeSearch} />
       </form>
