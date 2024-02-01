@@ -16,15 +16,17 @@ export default function Home() {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
   useEffect(() => {
-    try {
-      setIsLoading(true);
-      const contactList = ContactService.listContacts(orderBy);
-      setContacts(contactList);
-    } catch (err) {
-      console.log(`Error ${err}`);
-    } finally {
-      setIsLoading(false);
-    }
+    (async () => {
+      try {
+        setIsLoading(true);
+        const contactList = await ContactService.listContacts(orderBy);
+        setContacts(contactList);
+      } catch (err) {
+        console.log(`Error ${err}`);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, [orderBy]);
 
   function handleToggleOrderBy() {
