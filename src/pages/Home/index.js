@@ -5,6 +5,7 @@ import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
 import Loader from '../../components/Loader';
+import ContactService from '../../services/ContactService';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -15,17 +16,15 @@ export default function Home() {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:3000/contacts?order=${orderBy}`)
-      .then(async (response) => {
-        const json = await response.json();
-        setContacts(json);
-      })
-      .catch((err) => {
-        console.log(`Error ${err}`);
-      }).finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      setIsLoading(true);
+      const contactList = ContactService.listContacts(orderBy);
+      setContacts(contactList);
+    } catch (err) {
+      console.log(`Error ${err}`);
+    } finally {
+      setIsLoading(false);
+    }
   }, [orderBy]);
 
   function handleToggleOrderBy() {
