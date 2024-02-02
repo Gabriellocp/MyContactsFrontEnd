@@ -5,7 +5,12 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        &[hasError] {
+            justify-content: flex-end;
+        }
         align-items: center;
+        border-bottom: 2px solid $gray-100;
+        padding-bottom: 16px;
         strong{
             text-transform: lowercase;
             font-size: 24px;
@@ -24,6 +29,22 @@
                 background-color: $primary;
                 color: #fff;
                 transition: all 0.2s ease-in-out;
+            }
+        }
+    }
+    .errorContainer{
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        strong{
+            font-size: 22px;
+            color: $danger;
+        }
+        .details{
+            min-width: 50%;
+            margin-left: 24px;
+            button{
+                margin-top: 8px;
             }
         }
     }
