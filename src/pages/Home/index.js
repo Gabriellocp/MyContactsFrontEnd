@@ -7,6 +7,7 @@ import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
 import sad from '../../assets/images/sad.svg';
+import emptyBox from '../../assets/images/empty-box.svg';
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
 import Button from '../../components/Button';
@@ -53,13 +54,16 @@ export default function Home() {
   return (
     <>
       <Loader loading={isLoading} />
+      {!!contacts.length && (
       <form className={styles.searchInput}>
         <input type="text" placeholder="Search contact by name" onChange={handleChangeSearch} />
       </form>
+      )}
       <div className={styles.container}>
-        {/* eslint-disable-next-line react/no-unknown-property */}
-        <header hasError={error ? ' ' : null}>
-          {!error && <strong>{`${filteredContacts.length} Contact${filteredContacts.length === 1 ? '' : 's'}`}</strong>}
+        {/* eslint-disable-next-line react/no-unknown-property, no-nested-ternary */}
+        <header className={styles.mainHeader} style={{ justifyContent: error ? 'flex-end' : (contacts.length ? 'space-between' : 'center') }}>
+          {(!error && !!contacts.length)
+          && <strong>{`${filteredContacts.length} Contact${filteredContacts.length === 1 ? '' : 's'}`}</strong>}
           <Link to="/new">New contact</Link>
         </header>
         {error && (
@@ -75,34 +79,49 @@ export default function Home() {
         )}
         {
 
-          (!error && filteredContacts.length > 0) && (
+          !error && (
             <>
-              <header className={styles.listHeader}>
-                <button onClick={handleToggleOrderBy} type="button">
-                  Name
-                  <img src={arrow} alt="order" order={orderBy} />
-                </button>
-              </header>
-              {filteredContacts.map((contact) => (
-                <div key={contact.id} className={styles.card}>
-                  <div className={styles.info}>
-                    <div className={styles.contact}>
-                      <strong>{contact.name}</strong>
-                      {contact.category && <small>{contact.category}</small>}
-                    </div>
-                    <span>{contact.email}</span>
-                    <span>{contact.phone}</span>
-                  </div>
-                  <div className={styles.actions}>
-                    <Link to={`/edit/${contact.id}`}>
-                      <img src={edit} alt="edit" />
-                    </Link>
-                    <button type="button" onClick={() => {}}>
-                      <img src={trashcan} alt="delete" />
+              {(!contacts.length && !isLoading) && (
+              <div className={styles.emptyListContainer}>
+                <img src={emptyBox} alt="empty" />
+                <p>
+                  You do not have any contact yet.
+                  Click on
+                  <strong> ``New Contact`` </strong>
+                  button to register a new contact!
+                </p>
+              </div>
+              )}
+              {!!filteredContacts.length && (
+                <>
+                  <header className={styles.listHeader}>
+                    <button onClick={handleToggleOrderBy} type="button">
+                      Name
+                      <img src={arrow} alt="order" order={orderBy} />
                     </button>
-                  </div>
-                </div>
-              ))}
+                  </header>
+                  {filteredContacts.map((contact) => (
+                    <div key={contact.id} className={styles.card}>
+                      <div className={styles.info}>
+                        <div className={styles.contact}>
+                          <strong>{contact.name}</strong>
+                          {contact.category && <small>{contact.category}</small>}
+                        </div>
+                        <span>{contact.email}</span>
+                        <span>{contact.phone}</span>
+                      </div>
+                      <div className={styles.actions}>
+                        <Link to={`/edit/${contact.id}`}>
+                          <img src={edit} alt="edit" />
+                        </Link>
+                        <button type="button" onClick={() => {}}>
+                          <img src={trashcan} alt="delete" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
 
             </>
 

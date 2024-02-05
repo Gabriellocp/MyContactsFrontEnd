@@ -1,13 +1,9 @@
 @import '../../assets/styles/themes/default.scss';
 .container {
     margin-top: 32px;
-    header{
+    .mainHeader{
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        &[hasError] {
-            justify-content: flex-end;
-        }
         align-items: center;
         border-bottom: 2px solid $gray-100;
         padding-bottom: 16px;
@@ -51,6 +47,9 @@
     .listHeader{
         margin-top: 24px;
         margin-bottom: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
         button{
             display: flex;
             align-items: center;
@@ -107,6 +106,23 @@
             }
         }
     }
+}
+
+.emptyListContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    justify-content: center;
+    align-items: center;
+    p{
+        margin-top: 16px;
+        text-align: center;
+        color: $gray-200;
+        strong{
+            color: $primary;
+        }
+    }
+
 }
 
 .searchInput {
