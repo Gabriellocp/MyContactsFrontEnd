@@ -9,4 +9,13 @@
         font-size: 12px;
         color: $danger-dark
     }
+
+    .formItem{
+        position: relative;
+        .loader{
+            position: absolute;
+            right: 16px;
+            top: 18px;
+        }
+    }
 }
