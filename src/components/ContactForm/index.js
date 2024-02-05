@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import FormGroup from '../FormGroup';
@@ -9,16 +9,26 @@ import Button from '../Button';
 import isEmailValid from '../../utils/isEmailValid';
 import useErrors from '../../hooks/useErrors';
 import formatPhone from '../../utils/formatPhone';
+import CategoryService from '../../services/CategoryService';
 
 export default function ContactForm({ buttonLabel }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState([]);
   const {
     setError, removeError, getErrorMessageByFieldName, errors,
   } = useErrors([]);
   const isFormValid = name && errors.length === 0 && isEmailValid(email);
+
+  useEffect(() => {
+    async function loadCategories() {
+      const categoriesList = await CategoryService.listCategories();
+      setCategories(categoriesList);
+    }
+    loadCategories();
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -90,8 +100,10 @@ export default function ContactForm({ buttonLabel }) {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option value="" label="Category" />
-          <option value="Instagram" label="Instagram" />
+          <option value="" label="No category" />
+          {
+            categories.map((cat) => <option key={cat.id} value={cat.id} label={cat.name} />)
+          }
         </Select>
       </FormGroup>
       <div className={styles.buttonContainer}>
