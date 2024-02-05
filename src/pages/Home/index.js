@@ -8,6 +8,7 @@ import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
 import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
+import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
 import Button from '../../components/Button';
@@ -81,6 +82,19 @@ export default function Home() {
 
           !error && (
             <>
+              {(!!searchTerm && !filteredContacts.length)
+              && (
+              <div className={styles.contactNotFound}>
+                <img src={magnifierQuestion} alt="not found" />
+                <p>
+                  Contact with name
+                  <strong>
+                    {` ${searchTerm} `}
+                  </strong>
+                  not found!
+                </p>
+              </div>
+              )}
               {(!contacts.length && !isLoading) && (
               <div className={styles.emptyListContainer}>
                 <img src={emptyBox} alt="empty" />

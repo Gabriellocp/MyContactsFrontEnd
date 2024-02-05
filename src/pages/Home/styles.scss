@@ -125,6 +125,20 @@
 
 }
 
+.contactNotFound{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    p{
+        color: $gray-200;
+        word-break: break-all;
+        strong{
+            color: $primary;
+        }
+    }
+}
+
 .searchInput {
     margin-top: 48px;
     width: 100%;
