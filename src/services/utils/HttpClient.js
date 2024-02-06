@@ -5,8 +5,34 @@ class HttpClient {
     this.baseUrl = baseUrl;
   }
 
-  async get(path) {
-    const response = await fetch(`${this.baseUrl}${path}`);
+  get(path, options) {
+    return this.makeRequest(path, { method: 'GET', headers: options?.headers });
+  }
+
+  post(path, options) {
+    return this.makeRequest(path, {
+      method: 'POST',
+      body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
+  async makeRequest(path, options) {
+    const headers = new Headers();
+    if (options?.body) {
+      // This has to be done so the 'GET' isn't configured as 'PREFLIGHT' but as 'SIMPLE' request
+      headers.append('content-type', 'application/json');
+    }
+    if (options?.headers) {
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value);
+      });
+    }
+    const response = await fetch(`${this.baseUrl}${path}`, {
+      method: options.method,
+      body: JSON.stringify(options?.body),
+      headers,
+    });
     const contentType = response.headers.get('Content-Type');
     let body;
     if (contentType.includes('application/json')) {
@@ -16,26 +42,6 @@ class HttpClient {
       return body;
     }
     throw new APIError(response, body);
-  }
-
-  async post(path, body) {
-    const headers = new Headers({
-      'content-type': 'application/json',
-    });
-    const response = await fetch(`${this.baseUrl}${path}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers,
-    });
-    const contentType = response.headers.get('Content-Type');
-    let responseBody;
-    if (contentType.includes('application/json')) {
-      responseBody = await response.json();
-    }
-    if (response.ok) {
-      return responseBody;
-    }
-    throw new APIError(response, responseBody);
   }
 }
 
