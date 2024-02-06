@@ -20,7 +20,7 @@
         "react/jsx-filename-extension": [1, {"extensions":[".js",".jsx"]}],
         "linebreak-style": "off",
         "class-methods-use-this": "off",
-        "no-empty": ["error", {"allowEmptyCatch": "true"}]
+        "no-empty": ["error", {"allowEmptyCatch": true}]
 
     }
 }

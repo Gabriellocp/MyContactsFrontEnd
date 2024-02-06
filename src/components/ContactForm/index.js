@@ -11,13 +11,13 @@ import useErrors from '../../hooks/useErrors';
 import formatPhone from '../../utils/formatPhone';
 import CategoryService from '../../services/CategoryService';
 
-export default function ContactForm({ buttonLabel }) {
+export default function ContactForm({ buttonLabel, onSubmit }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const {
     setError, removeError, getErrorMessageByFieldName, errors,
   } = useErrors([]);
@@ -28,7 +28,7 @@ export default function ContactForm({ buttonLabel }) {
       try {
         const categoriesList = await CategoryService.listCategories();
         setCategories(categoriesList);
-      } catch {} finally{
+      } catch {} finally {
         setIsLoadingCategories(false);
       }
     }
@@ -37,7 +37,7 @@ export default function ContactForm({ buttonLabel }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log({
+    onSubmit({
       name, email, phone, category,
     });
   }
@@ -123,4 +123,5 @@ export default function ContactForm({ buttonLabel }) {
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
