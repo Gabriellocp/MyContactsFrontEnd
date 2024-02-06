@@ -20,4 +20,8 @@
     &[error]{
         border-color: $danger-dark;
     }
+    &[disabled]{
+        border-color: $gray-200;
+        background-color: $gray-100;
+    }
 }
