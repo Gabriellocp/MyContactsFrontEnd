@@ -1,8 +1,7 @@
+import EventManager from '../lib/EventManager';
+
+export const toastEventManager = new EventManager();
+
 export default function addToast({ type, text }) {
-  const event = new CustomEvent('addtoast', {
-    detail: {
-      text, type,
-    },
-  });
-  document.dispatchEvent(event);
+  toastEventManager.emit('addtoast', { type, text });
 }

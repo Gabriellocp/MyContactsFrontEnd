@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.scss';
 import ToastMessage from '../ToastMessage';
+import { toastEventManager } from '../../../utils/toast';
 
 export default function ToastContainer() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    function handleAddToast(event) {
-      const { text, type } = event.detail;
+    // Using document event listener
+    // function handleAddToast(event) {
+    //   const { text, type } = event.detail;
+    //   setMessages((prevState) => ([...prevState, { id: Math.random(), text, type }]));
+    // }
+    // // When component renders for the first time, add event listener
+    // document.addEventListener('addtoast', handleAddToast);
+    // // Remove the listener when component unmounts
+    // return () => {
+    //   document.removeEventListener('addtoast', handleAddToast);
+    // };
+
+    // Using custom event listener (EventManager)
+    function handleAddToast({ text, type }) {
       setMessages((prevState) => ([...prevState, { id: Math.random(), text, type }]));
     }
-    // When component renders for the first time, add event listener
-    document.addEventListener('addtoast', handleAddToast);
-    // Remove the listener when component unmounts
+    toastEventManager.on('addtoast', handleAddToast);
     return () => {
-      document.removeEventListener('addtoast', handleAddToast);
+      toastEventManager.remove('addtoast', handleAddToast);
     };
   }, []);
+
+  function handleRemoveMessage(id) {
+    setMessages((prevState) => (prevState.filter((message) => message.id !== id)));
+  }
 
   return (
     <div className={styles.container}>
       {messages.map((message) => (
-        <ToastMessage id={message.id} type={message.type} message={message.text} />
+        <ToastMessage
+          key={message.id}
+          message={message}
+          onRemove={(id) => handleRemoveMessage(id)}
+
+        />
       ))}
     </div>
   );

@@ -16,7 +16,7 @@ export default function NewContact() {
       await ContactService.createContact(contact);
       addToast({ text: 'Contact created', type: 'SUCCESS' });
     } catch {
-
+      addToast({ text: 'Error while trying to register', type: 'ERROR' });
     }
   }
   return (
