@@ -43,6 +43,10 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       name, email, phone, category,
     });
     setIsSubmitting(false);
+    setName('');
+    setPhone('');
+    setCategory('');
+    setEmail('');
   }
 
   function handleNameChange(e) {
