@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import checkCircle from '../../../assets/images/icons/check-circle.svg';
@@ -8,9 +8,21 @@ import xCircle from '../../../assets/images/icons/x-circle.svg';
 export default function ToastMessage({
   message, onRemove,
 }) {
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onRemove(message.id);
+    }, 5000);
+
+    return () => {
+      // If component unmounts, 'kill' the setTimeout process
+      clearTimeout(timeoutId);
+    };
+  }, [message, onRemove]);
+
   function handleRemoveToast() {
     onRemove(message.id);
   }
+
   return (
     <div
       role="button"
