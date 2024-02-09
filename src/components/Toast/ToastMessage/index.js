@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,6 +13,8 @@ export default function ToastMessage({
   }
   return (
     <div
+      role="button"
+      tabIndex={0}
       className={[styles.container, styles[message.type.toLowerCase()] || styles.default].join(' ')}
       onClick={handleRemoveToast}
     >
