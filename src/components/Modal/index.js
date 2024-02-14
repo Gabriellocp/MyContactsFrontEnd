@@ -1,35 +1,35 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import Button from '../Button';
+import ReactPortal from '../ReactPortal';
 
 export default function Modal({
   danger, title, children, cancelLabel, confirmLabel,
   onCalcel, onConfirm, visible, isLoading,
 }) {
   if (!visible) return null;
-  return ReactDOM.createPortal(
+  return (
+    <ReactPortal id="modalRoot">
+      <div className={styles.overlay}>
+        <div className={styles.container} danger={danger ? '' : null}>
+          <h1>{title}</h1>
+          {children}
 
-    <div className={styles.overlay}>
-      <div className={styles.container} danger={danger ? '' : null}>
-        <h1>{title}</h1>
-        {children}
-
-        <footer className={styles.footer}>
-          <button type="button" disabled={isLoading} className={styles.cancelButton} onClick={onCalcel}>{cancelLabel}</button>
-          <Button
-            danger={danger}
-            isLoading={isLoading}
-            onClick={onConfirm}
-          >
-            {confirmLabel}
-          </Button>
-        </footer>
+          <footer className={styles.footer}>
+            <button type="button" disabled={isLoading} className={styles.cancelButton} onClick={onCalcel}>{cancelLabel}</button>
+            <Button
+              danger={danger}
+              isLoading={isLoading}
+              onClick={onConfirm}
+            >
+              {confirmLabel}
+            </Button>
+          </footer>
+        </div>
       </div>
-    </div>,
-    document.getElementById('modalRoot'),
+    </ReactPortal>
   );
 }
 
