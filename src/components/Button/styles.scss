@@ -20,8 +20,8 @@
         background: $primary-dark;
     }
     &[disabled]{
-        background-color: #CCCCCC;
-        cursor: default;
+        background-color: #CCCCCC !important;
+        cursor: default !important;
     }
     &[danger]{
         background: $danger;

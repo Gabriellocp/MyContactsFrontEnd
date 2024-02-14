@@ -12,13 +12,18 @@ import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal';
+import addToast from '../../utils/toast';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [error, setError] = useState(false);
+  const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false);
+  const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
@@ -51,10 +56,49 @@ export default function Home() {
   function handleTryAgain() {
     loadContacts();
   }
+  function handleDelete(contact) {
+    setContactBeingDeleted(contact);
+    setIsDeletedModalVisible(true);
+  }
+  function handleCloseDeleteModal() {
+    setIsDeletedModalVisible(false);
+    setContactBeingDeleted(null);
+  }
 
+  async function handleConfirmDelete() {
+    try {
+      setIsLoadingDelete(true);
+      await ContactService.deleteContact(contactBeingDeleted.id);
+      setContacts(
+        (prevState) => (prevState.filter((contact) => contact.id !== contactBeingDeleted.id)),
+      );
+      addToast({ type: 'SUCCESS', text: 'Contact deleted' });
+      handleCloseDeleteModal();
+    } catch {
+      addToast({ type: 'ERROR', text: 'Error while trying to delete' });
+    } finally {
+      setIsLoadingDelete(false);
+    }
+  }
   return (
     <>
       <Loader loading={isLoading} />
+      {
+        isDeletedModalVisible
+      && (
+      <Modal
+        danger
+        isLoading={isLoadingDelete}
+        visible={isDeletedModalVisible}
+        title={`Are you sure you want to delete "${contactBeingDeleted?.name}"?`}
+        confirmLabel="Delete"
+        onCalcel={() => handleCloseDeleteModal()}
+        onConfirm={() => handleConfirmDelete()}
+      >
+        <p>This action can not be undone</p>
+      </Modal>
+      )
+      }
       {!!contacts.length && (
       <form className={styles.searchInput}>
         <input type="text" placeholder="Search contact by name" onChange={handleChangeSearch} />
@@ -128,7 +172,7 @@ export default function Home() {
                         <Link to={`/edit/${contact.id}`}>
                           <img src={edit} alt="edit" />
                         </Link>
-                        <button type="button" onClick={() => {}}>
+                        <button type="button" onClick={() => handleDelete(contact)}>
                           <img src={trashcan} alt="delete" />
                         </button>
                       </div>
