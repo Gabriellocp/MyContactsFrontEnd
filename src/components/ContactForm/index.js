@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useEffect, useState } from 'react';
+import React, {
+  forwardRef, useEffect, useImperativeHandle, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import FormGroup from '../FormGroup';
@@ -11,7 +13,7 @@ import useErrors from '../../hooks/useErrors';
 import formatPhone from '../../utils/formatPhone';
 import CategoryService from '../../services/CategoryService';
 
-export default function ContactForm({ buttonLabel, onSubmit }) {
+const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -19,6 +21,15 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
   const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    setFields: (contact) => {
+      setName(contact.name ?? '');
+      setEmail(contact.email ?? '');
+      setPhone(formatPhone(contact.phone));
+      setCategory(contact.category_id);
+    },
+  }), []);
   const {
     setError, removeError, getErrorMessageByFieldName, errors,
   } = useErrors([]);
@@ -43,10 +54,6 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       name, email, phone, category,
     });
     setIsSubmitting(false);
-    setName('');
-    setPhone('');
-    setCategory('');
-    setEmail('');
   }
 
   function handleNameChange(e) {
@@ -132,9 +139,11 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       </div>
     </form>
   );
-}
+});
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
+
+export default ContactForm;
