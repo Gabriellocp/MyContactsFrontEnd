@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PageHeader from '../../components/PageHeader';
 import ContactForm from '../../components/ContactForm';
 import ContactService from '../../services/ContactService';
 import addToast from '../../utils/toast';
 
 export default function NewContact() {
+  const contactFormRef = useRef(null);
   async function handleSubmit(formData) {
     try {
       const contact = {
@@ -15,6 +16,7 @@ export default function NewContact() {
       };
       await ContactService.createContact(contact);
       addToast({ text: 'Contact created', type: 'SUCCESS' });
+      contactFormRef.current.resetFields();
     } catch {
       addToast({ text: 'Error while trying to register', type: 'ERROR' });
     }
@@ -22,7 +24,7 @@ export default function NewContact() {
   return (
     <>
       <PageHeader title="New Contact" />
-      <ContactForm onSubmit={(value) => handleSubmit(value)} buttonLabel="Create Contact" />
+      <ContactForm ref={contactFormRef} onSubmit={(value) => handleSubmit(value)} buttonLabel="Create Contact" />
     </>
   );
 }
