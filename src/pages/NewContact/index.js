@@ -8,13 +8,7 @@ export default function NewContact() {
   const contactFormRef = useRef(null);
   async function handleSubmit(formData) {
     try {
-      const contact = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        categoryId: formData.category,
-      };
-      await ContactService.createContact(contact);
+      await ContactService.createContact(formData);
       addToast({ text: 'Contact created', type: 'SUCCESS' });
       contactFormRef.current.resetFields();
     } catch {
