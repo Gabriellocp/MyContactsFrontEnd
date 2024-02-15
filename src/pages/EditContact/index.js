@@ -19,7 +19,6 @@ export default function EditContact() {
         const contact = await ContactService.getContactById(id);
         contactFormRef.current.setFields(contact);
         setContactName(contact.name);
-
         setIsLoading(false);
       } catch {
         navigate('/');
@@ -45,7 +44,7 @@ export default function EditContact() {
   }
   return (
     <>
-      {isLoading && <Loader />}
+      <Loader loading={isLoading} />
       <PageHeader title={isLoading ? 'Loading...' : `Edit Contact ${contactName}`} />
       <ContactForm ref={contactFormRef} onSubmit={(contact) => handleSubmit(contact)} buttonLabel="Save Changes" />
     </>
