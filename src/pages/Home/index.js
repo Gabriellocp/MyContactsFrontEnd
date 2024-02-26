@@ -80,11 +80,15 @@ export default function Home() {
       setIsLoadingDelete(false);
     }
   }
+
+  const hasContacts = contacts.length > 0;
+  const isListEmpty = !hasContacts && !isLoading;
+  const isSearchEmpty = !!searchTerm && !filteredContacts.length;
   return (
     <>
       <Loader loading={isLoading} />
 
-      {!!contacts.length && (
+      {hasContacts && (
       <SearchInput value={searchTerm} onChange={(e) => handleChangeSearch(e)} />
       )}
       <div className={styles.container}>
@@ -100,11 +104,11 @@ export default function Home() {
 
           !error && (
             <>
-              {(!!searchTerm && !filteredContacts.length)
+              {isSearchEmpty
               && (
               <SearchNotFound searchTerm={searchTerm} />
               )}
-              {(!contacts.length && !isLoading) && (
+              {isListEmpty && (
               <EmptyList />
               )}
               <ContactsList
