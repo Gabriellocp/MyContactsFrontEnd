@@ -6,7 +6,6 @@ import styles from './styles.scss';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
-import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
 import Modal from '../../components/Modal';
@@ -15,6 +14,7 @@ import SearchInput from './components/SearchInput';
 import Header from './components/Header';
 import ErrorStatus from './components/ErrorStatus';
 import EmptyList from './components/EmptyList';
+import SearchNotFound from './components/SearchNotFound';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -103,16 +103,7 @@ export default function Home() {
             <>
               {(!!searchTerm && !filteredContacts.length)
               && (
-              <div className={styles.contactNotFound}>
-                <img src={magnifierQuestion} alt="not found" />
-                <p>
-                  Contact with name
-                  <strong>
-                    {` ${searchTerm} `}
-                  </strong>
-                  not found!
-                </p>
-              </div>
+              <SearchNotFound searchTerm={searchTerm} />
               )}
               {(!contacts.length && !isLoading) && (
               <EmptyList />
