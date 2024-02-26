@@ -2,69 +2,6 @@
 .container {
     margin-top: 32px;
 
-
-    .listHeader{
-        margin-top: 24px;
-        margin-bottom: 8px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        button{
-            display: flex;
-            align-items: center;
-            color: $primary;
-            gap: 8px;
-            font-weight: bold;
-            background: transparent;
-            border: none;
-        }
-        img{
-            transform: rotate(0deg);
-            &[order='desc']{
-                transform: rotate(180deg);
-            }
-            transition: transform .3s ease-in-out;
-        }
-    }
-    .card{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: #fff;
-        padding: 16px;
-        border-radius: 4px;
-        & + .card {
-            margin-top: 16px;
-        }
-        .info{
-            .contact{
-                display:flex;
-                gap: 8px;
-                text-transform: uppercase;
-                small{
-                    color: $primary;
-                    font-weight: bold;
-                    padding: 4px;
-                    border-radius: 4px;
-                    background: $primary-lighter;
-                }
-            }
-            span{
-                display: block;
-                font-size: 14px;
-                color: $gray-200;
-            }
-        }
-        .actions{
-            display: flex;
-            align-items: center;
-            button{
-                margin-left: 8px;
-                background: transparent;
-                border: none;
-            }
-        }
-    }
 }
 
 

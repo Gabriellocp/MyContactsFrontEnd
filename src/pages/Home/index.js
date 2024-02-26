@@ -1,20 +1,19 @@
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './styles.scss';
-import arrow from '../../assets/images/icons/arrow.svg';
-import edit from '../../assets/images/icons/edit.svg';
-import trashcan from '../../assets/images/icons/trashcan.svg';
+
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
-import Modal from '../../components/Modal';
 import addToast from '../../utils/toast';
 import SearchInput from './components/SearchInput';
 import Header from './components/Header';
+import Modal from '../../components/Modal';
+
 import ErrorStatus from './components/ErrorStatus';
 import EmptyList from './components/EmptyList';
 import SearchNotFound from './components/SearchNotFound';
+import ContactsList from './components/ContactsList';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -108,36 +107,12 @@ export default function Home() {
               {(!contacts.length && !isLoading) && (
               <EmptyList />
               )}
-              {!!filteredContacts.length && (
-                <>
-                  <header className={styles.listHeader}>
-                    <button onClick={handleToggleOrderBy} type="button">
-                      Name
-                      <img src={arrow} alt="order" order={orderBy} />
-                    </button>
-                  </header>
-                  {filteredContacts.map((contact) => (
-                    <div key={contact.id} className={styles.card}>
-                      <div className={styles.info}>
-                        <div className={styles.contact}>
-                          <strong>{contact.name}</strong>
-                          {contact.category && <small>{contact.category}</small>}
-                        </div>
-                        <span>{contact.email}</span>
-                        <span>{contact.phone}</span>
-                      </div>
-                      <div className={styles.actions}>
-                        <Link to={`/edit/${contact.id}`}>
-                          <img src={edit} alt="edit" />
-                        </Link>
-                        <button type="button" onClick={() => handleDelete(contact)}>
-                          <img src={trashcan} alt="delete" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
+              <ContactsList
+                filteredContacts={filteredContacts}
+                onDeleteContact={(contact) => handleDelete(contact)}
+                onToggleOrderBy={() => handleToggleOrderBy()}
+                orderBy={orderBy}
+              />
               <Modal
                 danger
                 isLoading={isLoadingDelete}
@@ -149,7 +124,6 @@ export default function Home() {
               >
                 <p>This action can not be undone</p>
               </Modal>
-
             </>
 
           )
