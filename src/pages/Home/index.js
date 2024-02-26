@@ -14,6 +14,7 @@ import ContactService from '../../services/ContactService';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import addToast from '../../utils/toast';
+import SearchInput from './components/SearchInput';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -83,26 +84,9 @@ export default function Home() {
   return (
     <>
       <Loader loading={isLoading} />
-      {
-        isDeletedModalVisible
-      && (
-      <Modal
-        danger
-        isLoading={isLoadingDelete}
-        visible={isDeletedModalVisible}
-        title={`Are you sure you want to delete "${contactBeingDeleted?.name}"?`}
-        confirmLabel="Delete"
-        onCalcel={() => handleCloseDeleteModal()}
-        onConfirm={() => handleConfirmDelete()}
-      >
-        <p>This action can not be undone</p>
-      </Modal>
-      )
-      }
+
       {!!contacts.length && (
-      <form className={styles.searchInput}>
-        <input type="text" placeholder="Search contact by name" onChange={handleChangeSearch} />
-      </form>
+      <SearchInput value={searchTerm} onChange={(e) => handleChangeSearch(e)} />
       )}
       <div className={styles.container}>
         {/* eslint-disable-next-line react/no-unknown-property, no-nested-ternary */}
@@ -180,6 +164,17 @@ export default function Home() {
                   ))}
                 </>
               )}
+              <Modal
+                danger
+                isLoading={isLoadingDelete}
+                visible={isDeletedModalVisible}
+                title={`Are you sure you want to delete "${contactBeingDeleted?.name}"?`}
+                confirmLabel="Delete"
+                onCalcel={() => handleCloseDeleteModal()}
+                onConfirm={() => handleConfirmDelete()}
+              >
+                <p>This action can not be undone</p>
+              </Modal>
 
             </>
 
