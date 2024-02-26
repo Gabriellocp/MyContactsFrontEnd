@@ -6,7 +6,6 @@ import styles from './styles.scss';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
-import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
@@ -15,6 +14,7 @@ import addToast from '../../utils/toast';
 import SearchInput from './components/SearchInput';
 import Header from './components/Header';
 import ErrorStatus from './components/ErrorStatus';
+import EmptyList from './components/EmptyList';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -115,15 +115,7 @@ export default function Home() {
               </div>
               )}
               {(!contacts.length && !isLoading) && (
-              <div className={styles.emptyListContainer}>
-                <img src={emptyBox} alt="empty" />
-                <p>
-                  You do not have any contact yet.
-                  Click on
-                  <strong> ``New Contact`` </strong>
-                  button to register a new contact!
-                </p>
-              </div>
+              <EmptyList />
               )}
               {!!filteredContacts.length && (
                 <>

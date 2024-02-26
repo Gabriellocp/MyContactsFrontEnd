@@ -67,22 +67,7 @@
     }
 }
 
-.emptyListContainer{
-    display: flex;
-    flex-direction: column;
-    margin-top: 16px;
-    justify-content: center;
-    align-items: center;
-    p{
-        margin-top: 16px;
-        text-align: center;
-        color: $gray-200;
-        strong{
-            color: $primary;
-        }
-    }
 
-}
 
 .contactNotFound{
     display: flex;
