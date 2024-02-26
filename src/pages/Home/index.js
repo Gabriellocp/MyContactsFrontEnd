@@ -6,16 +6,15 @@ import styles from './styles.scss';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trashcan from '../../assets/images/icons/trashcan.svg';
-import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import Loader from '../../components/Loader';
 import ContactService from '../../services/ContactService';
-import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import addToast from '../../utils/toast';
 import SearchInput from './components/SearchInput';
 import Header from './components/Header';
+import ErrorStatus from './components/ErrorStatus';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -96,15 +95,7 @@ export default function Home() {
           qtyOfFilteredContacts={filteredContacts.length}
         />
         {error && (
-        <div className={styles.errorContainer}>
-          <img src={sad} alt=":(" />
-          <div className={styles.details}>
-            <strong>An error has occurred while trying to get your contacts</strong>
-            <Button type="button" onClick={() => handleTryAgain()}>
-              Try again
-            </Button>
-          </div>
-        </div>
+        <ErrorStatus onTryAgain={() => handleTryAgain()} />
         )}
         {
 

@@ -2,22 +2,7 @@
 .container {
     margin-top: 32px;
 
-    .errorContainer{
-        margin-top: 16px;
-        display: flex;
-        align-items: center;
-        strong{
-            font-size: 22px;
-            color: $danger;
-        }
-        .details{
-            min-width: 50%;
-            margin-left: 24px;
-            button{
-                margin-top: 8px;
-            }
-        }
-    }
+
     .listHeader{
         margin-top: 24px;
         margin-bottom: 8px;
