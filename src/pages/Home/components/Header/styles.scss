@@ -1,0 +1,28 @@
+@import '../../../../assets/styles/themes/default.scss';
+.mainHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 2px solid $gray-100;
+    padding-bottom: 16px;
+    strong{
+        text-transform: lowercase;
+        font-size: 24px;
+        color: #222;
+    }
+
+    a{
+        font-size: 16px;
+        color: $primary;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid $primary;
+        border-radius: 4px;
+        &:hover{
+            background-color: $primary;
+            color: #fff;
+            transition: all 0.2s ease-in-out;
+        }
+    }
+}

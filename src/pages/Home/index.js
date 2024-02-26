@@ -15,6 +15,7 @@ import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import addToast from '../../utils/toast';
 import SearchInput from './components/SearchInput';
+import Header from './components/Header';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -89,12 +90,11 @@ export default function Home() {
       <SearchInput value={searchTerm} onChange={(e) => handleChangeSearch(e)} />
       )}
       <div className={styles.container}>
-        {/* eslint-disable-next-line react/no-unknown-property, no-nested-ternary */}
-        <header className={styles.mainHeader} style={{ justifyContent: error ? 'flex-end' : (contacts.length ? 'space-between' : 'center') }}>
-          {(!error && !!contacts.length)
-          && <strong>{`${filteredContacts.length} Contact${filteredContacts.length === 1 ? '' : 's'}`}</strong>}
-          <Link to="/new">New contact</Link>
-        </header>
+        <Header
+          error={error}
+          qtyOfContacts={contacts.length}
+          qtyOfFilteredContacts={filteredContacts.length}
+        />
         {error && (
         <div className={styles.errorContainer}>
           <img src={sad} alt=":(" />
