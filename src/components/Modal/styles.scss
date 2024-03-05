@@ -16,6 +16,7 @@
         padding: 24px;
         max-width: 450px;
         width: 100%;
+        animation: fadeIn .5s ;
         h1{
             font-size: 22px;
         }
@@ -43,5 +44,16 @@
                 color: $danger
             }
         }
+    }
+}
+
+@keyframes fadeIn {
+    from{
+opacity: 0;
+}
+
+to{
+
+    opacity: 1;
     }
 }

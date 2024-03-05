@@ -1,18 +1,17 @@
-import React from 'react'
-import styles from './styles.scss'
-import PropTypes from 'prop-types'
-export default function Spinner({size}){
-    return (
-        <div className={styles.spinner} style={{fontSize: `${size}px`}}>
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './styles.scss';
 
-        </div>
-    )
+export default function Spinner({ size }) {
+  return (
+    <div className={styles.spinner} style={{ fontSize: `${size}px` }} />
+  );
 }
 
 Spinner.propTypes = {
-    size: PropTypes.number
-}
+  size: PropTypes.number,
+};
 
 Spinner.defaultProps = {
-    size: 90
-}
+  size: 90,
+};
