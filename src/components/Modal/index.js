@@ -1,36 +1,20 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import Button from '../Button';
 import ReactPortal from '../ReactPortal';
+import useAnimatedUnmount from '../../hooks/useAnimatedUnmount';
 
 export default function Modal({
   danger, title, children, cancelLabel, confirmLabel,
   onCancel, onConfirm, visible, isLoading,
 }) {
-  const [shouldRender, setShouldRender] = useState(visible);
-  const overlayRef = useRef(null);
-
-  useEffect(() => {
-    const ref = overlayRef.current;
-    const handleAnimationEnd = () => {
-      setShouldRender(false);
-    };
-    if (visible) setShouldRender(true);
-    if (!visible && ref) {
-      ref.addEventListener('animationend', handleAnimationEnd);
-    }
-    return () => {
-      if (ref) {
-        ref.removeEventListener('animationend', handleAnimationEnd);
-      }
-    };
-  }, [visible]);
+  const { shouldRender, elementRef } = useAnimatedUnmount(visible);
   if (!shouldRender) return null;
   return (
     <ReactPortal id="modalRoot">
-      <div className={styles.overlay} ref={overlayRef}>
+      <div className={styles.overlay} ref={elementRef}>
         <div className={styles.container} danger={danger ? '' : null} data-leave={!visible}>
           <h1>{title}</h1>
           {children}
