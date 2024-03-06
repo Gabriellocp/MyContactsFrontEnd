@@ -123,7 +123,7 @@ export default function Home() {
                 visible={isDeletedModalVisible}
                 title={`Are you sure you want to delete "${contactBeingDeleted?.name}"?`}
                 confirmLabel="Delete"
-                onCalcel={() => handleCloseDeleteModal()}
+                onCancel={() => handleCloseDeleteModal()}
                 onConfirm={() => handleConfirmDelete()}
               >
                 <p>This action can not be undone</p>

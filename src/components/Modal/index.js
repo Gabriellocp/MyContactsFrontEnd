@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 import Button from '../Button';
@@ -7,18 +7,43 @@ import ReactPortal from '../ReactPortal';
 
 export default function Modal({
   danger, title, children, cancelLabel, confirmLabel,
-  onCalcel, onConfirm, visible, isLoading,
+  onCancel, onConfirm, visible, isLoading,
 }) {
-  if (!visible) return null;
+  const [shouldRender, setShouldRender] = useState(visible);
+  const overlayRef = useRef(null);
+
+  useEffect(() => {
+    const ref = overlayRef.current;
+    const handleAnimationEnd = () => {
+      setShouldRender(false);
+    };
+    if (visible) setShouldRender(true);
+    if (!visible && ref) {
+      ref.addEventListener('animationend', handleAnimationEnd);
+    }
+    return () => {
+      if (ref) {
+        ref.removeEventListener('animationend', handleAnimationEnd);
+      }
+    };
+  }, [visible]);
+  if (!shouldRender) return null;
   return (
     <ReactPortal id="modalRoot">
-      <div className={styles.overlay}>
-        <div className={styles.container} danger={danger ? '' : null}>
+      <div className={styles.overlay} ref={overlayRef}>
+        <div className={styles.container} danger={danger ? '' : null} data-leave={!visible}>
           <h1>{title}</h1>
           {children}
 
           <footer className={styles.footer}>
-            <button type="button" disabled={isLoading} className={styles.cancelButton} onClick={onCalcel}>{cancelLabel}</button>
+            <button
+              type="button"
+              disabled={isLoading}
+              className={styles.cancelButton}
+              onClick={onCancel}
+            >
+              {cancelLabel}
+            </button>
             <Button
               danger={danger}
               isLoading={isLoading}
@@ -38,7 +63,7 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   cancelLabel: PropTypes.string,
   confirmLabel: PropTypes.string,
-  onCalcel: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool,

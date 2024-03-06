@@ -1,46 +1,56 @@
 @import '../../assets/styles/themes/default.scss';
+
 .overlay {
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
-    .container{
+
+    .container {
         background: #fff;
         border-radius: 4px;
         padding: 24px;
         max-width: 450px;
         width: 100%;
-        animation: fadeIn .5s ;
-        h1{
+        animation: fadeIn .5s;
+        &[data-leave=true]{
+            animation: fadeOut .5s;
+        }
+        h1 {
             font-size: 22px;
         }
-        p{
+
+        p {
             margin-top: 8px;
         }
-        .footer{
+
+        .footer {
             align-items: center;
             justify-content: flex-end;
             display: flex;
             margin-top: 32px;
-            .cancelButton{
+
+            .cancelButton {
                 border: none;
                 background: transparent;
                 color: $gray-200;
                 font-size: 16px;
                 margin-right: 24px;
             }
-            button{
+
+            button {
                 max-width: 100px;
             }
         }
-        &[danger]{
-            h1{
+
+        &[danger] {
+            h1 {
                 color: $danger
             }
         }
@@ -48,12 +58,21 @@
 }
 
 @keyframes fadeIn {
-    from{
-opacity: 0;
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
-to{
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
 
-    opacity: 1;
+    to {
+        opacity: 0;
     }
 }
