@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './styles.scss';
 import checkCircle from '../../../assets/images/icons/check-circle.svg';
 import xCircle from '../../../assets/images/icons/x-circle.svg';
 
-export default function ToastMessage({
+function ToastMessage({
   message, onRemove, isLeaving, animatedRef,
 }) {
   useEffect(() => {
@@ -50,3 +50,5 @@ ToastMessage.propTypes = {
   isLeaving: PropTypes.bool.isRequired,
   animatedRef: PropTypes.shape().isRequired,
 };
+
+export default memo(ToastMessage);
